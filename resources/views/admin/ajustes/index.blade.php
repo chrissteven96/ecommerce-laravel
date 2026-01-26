@@ -10,9 +10,9 @@
                 <h6 class="m-0 font-weight-bold text-primary">Configuración General</h6>
             </div>
             <div class="card-body">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('/admin/ajustes/create') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
+                    {{-- @method('PUT') --}}
                     
                     <div class="row">
                         <!-- Columna Izquierda -->
@@ -157,19 +157,21 @@
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="logo" class="form-label">Logo del Sistema</label>
+                                <label for="logo" class="form-label">Logo
+                                </label>
                                 <input type="file" 
                                        id="logo"
                                        name="logo" 
                                        class="form-control @error('logo') is-invalid @enderror"
                                        accept="image/*" 
+                                       @if(!isset($ajuste) || !$ajuste->logo) required @else  @endif
                                        onchange="mostrarImagen(event)">
                                 @error('logo')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 @if(isset($ajuste->logo) && $ajuste->logo)
                                     <div class="mt-2">
-                                        <img src="{{ asset('storage/' . $ajuste->logo) }}" alt="Logo actual" style="max-width: 400px; margin-top: 10px;">
+                                        <img src="{{ url('storage/' . $ajuste->logo) }}" id="logopreview" alt="Logo actual" style="max-width: 400px; margin-top: 10px;">
                                     </div>
                                 @endif
 
@@ -190,13 +192,14 @@
                                        name="img_login" 
                                        class="form-control @error('img_login') is-invalid @enderror"
                                        accept="image/*"
+                                        @if(!isset($ajuste) || !$ajuste->img_login) required @else  @endif
                                        onchange="mostrarImagen2(event)">
                                 @error('img_login')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 @if(isset($ajuste->img_login) && $ajuste->img_login)
                                     <div class="mt-2">
-                                        <img src="{{ asset('storage/' . $ajuste->img_login) }}" alt="Imagen de login actual" style="max-height: 100px;">
+                                        <img src="{{ asset('storage/' . $ajuste->img_login) }}" id="loginpreview" alt="Imagen de login actual" style="max-height: 400px;">
                                     </div>
                                 @endif
 
@@ -211,7 +214,7 @@
 
                         </div>
                     </div>
-
+<hr>    
                     <div class="d-flex justify-content-end mt-4">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-save me-2"></i>Guardar Cambios
