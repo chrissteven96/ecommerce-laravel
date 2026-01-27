@@ -32,15 +32,16 @@
                         <tr>
                             <td class="text-center"> {{ $i++ }}</td>
                             <td> {{ $role->name }}</td>
-                            <td class="text-center">
-                                <form action="{{ url('/admin/roles/' . $role->id . '/edit') }}" class="gap-2">
-                                    @csrf
-                                    <a href="" class="btn btn-success" title="Ver">
+                            <td class="text-center gap-2">
+                                
+                                    <a href="{{ url('/admin/roles/'.$role->id) }}" class="btn btn-success" title="Ver">
                                         <i class="bi bi-eye "></i>
                                     </a>
-                                    <a href="" class="btn btn-primary" title="Editar">
+                                    <a href="{{ url('/admin/roles/' . $role->id . '/edit') }}" class="btn btn-primary" title="Editar">
                                         <i class="bi bi-pencil "></i>
                                     </a>
+                                    <form action="" method="POST" style="display: inline-block">
+                                    @csrf
                                     <button type="delete" class="btn btn-danger" title="Eliminar">
                                         <i class="bi bi-trash "></i>
                                     </button>
