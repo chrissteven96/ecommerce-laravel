@@ -171,11 +171,11 @@
                                 @enderror
                                 @if(isset($ajuste->logo) && $ajuste->logo)
                                     <div class="mt-2">
-                                        <img src="{{ url('storage/' . $ajuste->logo) }}" id="logopreview" alt="Logo actual" style="max-width: 400px; margin-top: 10px;">
+                                        <img src="{{ url('storage/' . $ajuste->logo) }}" id="logopreview" alt="Logo actual" style="max-height: 300px; margin-top: 10px;">
                                     </div>
                                 @endif
 
-                                <img id="logopreview" style="max-width: 400px; margin-top: 10px;" alt="" src="">
+                                <img id="logopreview" style="max-height: 300px; margin-top: 10px;" alt="" src="">
 
                                 <script>
                                     const mostrarImagen = e =>
@@ -199,11 +199,11 @@
                                 @enderror
                                 @if(isset($ajuste->img_login) && $ajuste->img_login)
                                     <div class="mt-2">
-                                        <img src="{{ asset('storage/' . $ajuste->img_login) }}" id="loginpreview" alt="Imagen de login actual" style="max-height: 400px;">
+                                        <img src="{{ asset('storage/' . $ajuste->img_login) }}" id="loginpreview" alt="Imagen de login actual" style="max-height: 300px;">
                                     </div>
                                 @endif
 
-                                <img id="loginpreview" style="max-width: 400px; margin-top: 10px;" alt="" src="">
+                                <img id="loginpreview" style="max-height: 300px; margin-top: 10px;" alt="" src="">
 
                                 <script>
                                     const mostrarImagen2 = e =>

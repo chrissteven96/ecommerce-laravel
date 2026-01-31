@@ -1,10 +1,14 @@
+@php
+    $ajuste = \App\Models\Ajuste::first();
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Mazer Admin Dashboard</title>
+    <title> {{ $ajuste->nombre ?? 'Tienda' }} </title>
     
     
     
@@ -22,11 +26,11 @@
 <div class="row h-100">
     <div class="col-lg-5 col-12">
         <div id="auth-left">
-            <div class="auth-logo">
-                <a href="index.html"><img src="./assets/compiled/svg/logo.svg" alt="Logo"></a>
+            <div class="">
+                <a href=" {{ route('home') }} "><img src="{{ $ajuste && $ajuste->logo ? url('storage/' . $ajuste->logo) : './assets/compiled/svg/logo.svg' }}" style="max-height: 100px; margin-bottom: 20px;" alt="{{ $ajuste->nombre ?? 'Tienda' }}"></a>
             </div>
-            <h1 class="auth-title">Log in.</h1>
-            <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p>
+            <h1 class="auth-title">{{ $ajuste->nombre ?? 'Tienda' }}</h1>
+            <p class="auth-subtitle mb-5">Inicia sesión para continuar</p>
 
            <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -60,24 +64,25 @@
 {{-- <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}> --}}
 
                     <label class="form-check-label text-gray-600" for="remember">
-                        {{ __('Remember Me') }}
+                        {{ __('Recuerdame') }}
                     </label>
 {{-- 
                                                         <label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
                                     </label> --}}
                 </div>
-                <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
+                <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Iniciar Sesión</button>
             </form>
             <div class="text-center mt-5 text-lg fs-4">
-                <p class="text-gray-600">Don't have an account? <a href="auth-register.html" class="font-bold">Sign
-                        up</a>.</p>
-                <p><a class="font-bold" href="auth-forgot-password.html">Forgot password?</a>.</p>
+                <p class="text-gray-600">Aun no tienes cuenta? <a href="auth-register.html" class="font-bold">Registrate</a>.</p>
+                <p><a class="font-bold" href="auth-forgot-password.html">Olvidaste tu contraseña?</a>.</p>
             </div>
         </div>
     </div>
     <div class="col-lg-7 d-none d-lg-block">
         <div id="auth-right">
+
+            <img @if(!$ajuste || !$ajuste->img_login) style="display: none;" @endif src="{{ $ajuste && $ajuste->img_login ? url('storage/' . $ajuste->img_login) : null }}" alt="Login Background" style="width: 100%; height: 100%; object-fit: cover;" >
 
         </div>
     </div>

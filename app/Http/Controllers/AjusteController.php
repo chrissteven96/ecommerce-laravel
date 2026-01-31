@@ -96,6 +96,9 @@ class AjusteController extends Controller
 
         $ajuste->save();
 
+        return redirect()->route('admin.ajustes.index')
+        ->with('mensaje', 'Ajustes actualizados correctamente')
+        ->with('icono', 'success');
     }
     
         

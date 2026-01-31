@@ -20,6 +20,7 @@
 
 <body>
     <script src="{{ asset('assets/static/js/initTheme.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <div id="app">
         <div id="sidebar">
             <div class="sidebar-wrapper active">
@@ -183,6 +184,19 @@
 <!-- Need: Apexcharts -->
 <script src="{{url('assets/extensions/apexcharts/apexcharts.min.js')}}"></script>
 <script src="{{url('assets/static/js/pages/dashboard.js')}}"></script>
+
+
+@if(session('mensaje') && session('icono'))
+    <script>
+        Swal.fire({
+        position: "center",
+        icon: "{{session('icono')}}",
+        title: "{{session('mensaje')}}",
+        showConfirmButton: false,
+        timer: 1500
+        });
+    </script>
+@endif
 
 </body>
 
