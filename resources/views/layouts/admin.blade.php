@@ -77,8 +77,16 @@
             <li
                 class="sidebar-item {{ request()->is('admin/rol*') ? 'active' : '' }} ">
                 <a href="{{url('/admin/roles')}}" class='sidebar-link'>
-                    <i class="bi bi-person-rolodex"></i>
+                    <i class="bi bi-person-vcard-fill"></i>
                     <span>Roles</span>
+                </a>
+            </li>
+
+            <li
+                class="sidebar-item {{ request()->is('admin/usuario*') ? 'active' : '' }} ">
+                <a href="{{url('/admin/usuarios')}}" class='sidebar-link'>
+                   <i class="bi bi-person-bounding-box"></i>
+                    <span>Usuarios</span>
                 </a>
             </li>
     
