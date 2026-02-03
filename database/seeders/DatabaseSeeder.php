@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Ajuste;
+use App\Models\Categoria;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
             'img_login' => 'img_login/mnHWx3K4fdObGZ06SSzfPY9jMsflejS6ulrcjMRN.png',
         ]);
 
+        Categoria::factory(15)->create();
 
     }
 }

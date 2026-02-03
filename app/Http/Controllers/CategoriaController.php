@@ -10,9 +10,15 @@ class CategoriaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index( Request $request)
     {
-        //
+        $search = $request->get('search');
+        $query = Categoria::query();
+        if ($search) {
+            $query->where('nombre', 'LIKE', "%$search%");
+        }
+        $categorias = $query->paginate(10);
+        return view('admin.categorias.index', compact('categorias'));
     }
 
     /**
