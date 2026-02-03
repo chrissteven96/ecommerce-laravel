@@ -32,7 +32,7 @@
                         <tr>
                             <td class="text-center"> {{ $i++ }}</td>
                             <td> {{ $role->name }}</td>
-                            <td class="text-center gap-2">
+                            <td class=" text-center gap-2">
                                 
                                     <a href="{{ url('/admin/roles/'.$role->id) }}" class="btn btn-success" title="Ver">
                                         <i class="bi bi-eye "></i>
@@ -40,9 +40,41 @@
                                     <a href="{{ url('/admin/roles/' . $role->id . '/edit') }}" class="btn btn-primary" title="Editar">
                                         <i class="bi bi-pencil "></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger" title="Eliminar" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $role->id }}">
+                                    <form class="d-inline" action="{{ url('/admin/roles/' . $role->id) }}" method="POST" id="delete-form-{{ $role->id }}">
+                                        @method('DELETE')
+                                        @csrf
+                                    
+                                    <button type="button" class="btn btn-danger" title="Eliminar" onclick="confirmDelete{{ $role->id }}(event)">
                                         <i class="bi bi-trash "></i>
                                     </button>
+                                    </form>
+
+                                    <script>
+                                        function confirmDelete{{ $role->id }}(event) {
+                                            event.preventDefault();
+                                            Swal.fire({
+                                                title: "¿Desea eliminar el rol {{ $role->name }}?",
+                                                text: "¡No se podrá revertir esta acción!",
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                reverseButtons: true,
+                                                buttonsStyling: false,
+                                                confirmButtonText: "Eliminar",
+                                                cancelButtonText: "Cancelar",
+                                                customClass: {
+                                                    actions: 'd-flex gap-2',
+                                                    confirmButton: 'btn btn-danger',
+                                                    cancelButton: 'btn btn-secondary'
+                                                }
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    document.getElementById('delete-form-{{ $role->id }}').submit();
+                                                    
+                                                }
+                                                });
+                                        }
+                                    </script>
+                                    
                             </td>
                         </tr>
                             
@@ -59,32 +91,6 @@
         </div>
         </div>
     </div>
-
-    <!-- Modal de confirmación de eliminación -->
-    @foreach ($roles as $role)
-    <div class="modal fade" id="deleteModal{{ $role->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $role->id }}" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title " id="deleteModalLabel{{ $role->id }}"><i class="bi bi-exclamation-triangle-fill" style="font-size: 3rem; color: #dc3545;"></i></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Está seguro de que desea eliminar el rol "{{ $role->name }}"? Esta acción no se puede deshacer.
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ url('/admin/roles/'. $role->id) }}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
-
 
 @endsection
 

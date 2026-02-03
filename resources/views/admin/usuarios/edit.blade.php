@@ -27,11 +27,9 @@
                                     </span>
                                     <select name="rol" id="rol" class="form-control" required>
                                         @foreach ($roles as $rol)
-                                        @if ($rol->name != 'SUPER ADMIN')
-                                            <option value="{{ $rol->name }}"
-                                                {{ old('rol') == $rol->name ? 'selected' : '' }}
-                                                >{{ $rol->name }}</option>
-                                        @endif
+                                        <option value="{{ $rol->name }}"
+                                            {{ old('rol', $usuario->roles->pluck('name')->implode(',')) == $rol->name ? 'selected' : '' }}
+                                            >{{ $rol->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -45,7 +43,7 @@
                                     <label for="">Nombre</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                        <input type="text" name="name" id="name" class="form-control" value="{{ $usuario->name }}" required>
+                                        <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $usuario->name) }}" required>
                                     </div>
                                     @error('name')
                                         <small class="text-danger">{{ $message }}</small>
@@ -59,7 +57,7 @@
                                     <label for="">Email</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                        <input type="text" name="email" id="email" class="form-control" value="{{ $usuario->email }}" required>
+                                        <input type="text" name="email" id="email" class="form-control" value="{{ old('email', $usuario->email) }}" required>
                                     </div>
                                     @error('email')
                                         <small class="text-danger">{{ $message }}</small>
@@ -77,7 +75,7 @@
                                     <label for="">Contraseña</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
-                                        <input type="text" name="password" id="password" class="form-control" value="" required>
+                                        <input type="text" name="password" id="password" class="form-control" value="">
                                     </div>
                                     @error('password')
                                         <small class="text-danger">{{ $message }}</small>
@@ -91,7 +89,7 @@
                                     <label for="">Confirmar contraseña</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                                        <input type="text" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                                        <input type="text" name="password_confirmation" id="password_confirmation" class="form-control">
                                     </div>
                                     @error('password_confirmation')
                                         <small class="text-danger">{{ $message }}</small>

@@ -26,7 +26,7 @@
                                     </span>
                                     <select name="rol" id="rol" class="form-control" required>
                                         @foreach ($roles as $rol)
-                                        @if ($rol->name != 'SUPER ADMIN')
+                                        @if ($rol->name != 'SUPER_ADMIN')
                                             <option value="{{ $rol->name }}"
                                                 {{ old('rol') == $rol->name ? 'selected' : '' }}
                                                 >{{ $rol->name }}</option>

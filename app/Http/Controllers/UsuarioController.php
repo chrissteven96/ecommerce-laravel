@@ -15,7 +15,9 @@ class UsuarioController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-        $query = User::query(); 
+        $query = User::WhereDoesntHave('roles', function ($q) {
+            $q->where('name', 'SUPER_ADMIN');
+        })->withTrashed(); 
         if ($search) {
             $query->where('name', 'LIKE', '%'. $search .'%')
                     ->orWhere('email', 'LIKE', '%'. $search .'%');
@@ -85,15 +87,17 @@ class UsuarioController extends Controller
         $request->validate([
             'rol' => 'required',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|email|max:255|unique:users,email,'.$id,
+            'password' => 'nullable|string|min:8|confirmed',
 
         ]);
 
         $usuario = User::find($id);
         $usuario->name = (request('name'));
         $usuario->email = (request('email'));
-        $usuario->password = (request('password'));
+        if (request('password') != null) {
+            $usuario->password = bcrypt(request('password'));
+        }
         $usuario->save();
 
         $usuario->syncRoles(request('rol'));
@@ -109,9 +113,22 @@ class UsuarioController extends Controller
     public function destroy(string $id)
     {
         $usuario = User::find($id);
+        $usuario->status = false;
+        $usuario->save();
         $usuario->delete();
         return redirect()->route('admin.usuarios.index')
         ->with('mensaje', 'Usuario eliminado exitosamente')
+        ->with('icono', 'success');
+    }
+
+    public function restore($id)
+    {
+        $usuario = User::withTrashed()->find($id);
+        $usuario->restore();
+        $usuario->status = true;
+        $usuario->save();
+        return redirect()->route('admin.usuarios.index')
+        ->with('mensaje', 'Usuario restaurado exitosamente')
         ->with('icono', 'success');
     }
 }

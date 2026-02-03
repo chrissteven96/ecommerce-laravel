@@ -46,3 +46,7 @@ Route::put('admin/usuario/{id}', [App\Http\Controllers\UsuarioController::class,
 
 Route::delete('admin/usuario/{id}', [App\Http\Controllers\UsuarioController::class, 'destroy'])->name('admin.usuarios.destroy')->middleware('auth');
 
+Route::post('admin/usuario/{id}/restore', [App\Http\Controllers\UsuarioController::class, 'restore'])->name('admin.usuarios.restore')->middleware('auth');
+
+
+
