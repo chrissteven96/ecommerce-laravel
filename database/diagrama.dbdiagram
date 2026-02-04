@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "detailLevel": "All",
+  "tablePositions": [
+    {
+      "name": "categoria",
+      "schemaName": "public",
+      "x": 77.5480558690784,
+      "y": -140.81253169921888
+    },
+    {
+      "name": "productos",
+      "schemaName": "public",
+      "x": 353.2871371864469,
+      "y": -320.4128839282042
+    },
+    {
+      "name": "imagenes_producto",
+      "schemaName": "public",
+      "x": 647.2839752459324,
+      "y": -143.548358876139
+    }
+  ],
+  "tableGroupCollapseStates": [],
+  "stickyNoteLayouts": [],
+  "referencePaths": [
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "categoria",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "categoria_id"
+      ],
+      "secondTableName": "productos",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    }
+  ]
+}

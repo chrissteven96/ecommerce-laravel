@@ -56,7 +56,7 @@
                             <td> {{ $categoria->nombre }}</td>
                             <td> {{ $categoria->slug }}</td>
                             <td> {{ $categoria->descripcion }}</td>
-                            <td class="text-center gap-2">
+                            <td class="text-center gap-2 btn-group">
                                 
                                 
                                     <a href="{{ url('/admin/categoria/'.$categoria->id) }}" class="btn btn-success" title="Ver">
