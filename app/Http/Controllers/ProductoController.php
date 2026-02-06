@@ -4,15 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Models\Categoria;
 
 class ProductoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->get('search');
+        $query = Producto::query();
+        if ($search) {
+            $query->where('nombre', 'LIKE', '%'.$search.'%')
+                ->orWhere('codigo', 'LIKE', '%'.$search.'%')
+                ->orWhere('descripcion_corta', 'LIKE', '%'.$search.'%')
+                ->orWhere('descripcion_larga', 'LIKE', '%'.$search.'%');
+        }
+        $productos = $query->paginate(10);
+        return view('admin.productos.index', compact('productos'));
     }
 
     /**
@@ -20,7 +30,8 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::all();
+        return view('admin.productos.create', compact('categorias'));
     }
 
     /**
