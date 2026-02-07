@@ -14,7 +14,7 @@
             </div>
             <hr>
             <div class="card-body">
-                <form action=" {{ url('/admin/productos/create') }}" method="POST">
+                <form action=" {{ url('/admin/productos/create') }}" enctype="multipart/form-data" method="POST">
                     @csrf
 
                     <div class="row">
@@ -25,7 +25,7 @@
                                     <span class="input-group-text">
                                         <i class="bi bi-tag"></i>
                                     </span>
-                                <select name="categoria_id" id="categoria_id" class="form-control" required>
+                                <select name="categoria_id" id="categoria_id" class="form-control"  required>
                                     <option value="">Selecciona una categoria</option>
                                     @foreach ($categorias as $categoria)
                                         <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="descripcion_corta">Descripción corta</label>
                                 <div class="input-group">
@@ -86,7 +86,13 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+
+                        
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="descripcion_larga">Descripción larga</label>
                                 <div class="" style="width: 100%;">
@@ -107,8 +113,6 @@
 
                                 </script>
                         </div>
-                        
-
                     </div>
 
                     <div class="row">
@@ -157,7 +161,48 @@
                             </div>
                         </div>
 
+                        <input type="hidden" name="slug" id="slug" class="form-control" value="{{ old('slug') }}" readonly required>
 
+                    </div>
+
+  
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <h6 class="m-0 font-weight-bold text-primary">Subir imagenes</h6>
+                            <div class="form-group">
+                                <label for="imagenes">Imagenes</label>
+                                <input type="file"
+                                    name="images[]"
+                                    class="form-control"
+                                    multiple
+                                    accept="image/*"
+                                    onchange="previewImages(this)"
+                                    id="imagenes">
+                            </div>
+                            <div id="imagePreview" class="row mt-2"></div>
+                            <script>
+                                function previewImages(input) {
+                                    const preview = document.getElementById('imagePreview');
+                                    preview.innerHTML = '';
+
+                                    Array.from(input.files).forEach(file => {
+                                        const reader = new FileReader();
+
+                                        reader.onload = e => {
+                                            preview.innerHTML += `
+                                                <div class="col-md-3 mb-3">
+                                                    <img src="${e.target.result}"
+                                                        class="img-fluid rounded"
+                                                        style="height:150px;object-fit:cover;">
+                                                </div>
+                                            `;
+                                        };
+
+                                        reader.readAsDataURL(file);
+                                    });
+                                }
+                                </script>
+                        </div>
                     </div>
 
 
@@ -182,7 +227,7 @@
 
         <script>
         // Generar slug automáticamente desde el nombre
-        document.getElementById('name').addEventListener('input', function() {
+        document.getElementById('nombre').addEventListener('input', function() {
         let nombre = this.value;
         let slug = nombre.toLowerCase()
         . replace(/[úüüü]/g, 'u')
