@@ -26,9 +26,9 @@
                                         <i class="bi bi-tag"></i>
                                     </span>
                                 <select name="categoria_id" id="categoria_id" class="form-control"  required>
-                                    <option value="">Selecciona una categoria</option>
+                                    <option value="{{ old('categoria_id') }}">Selecciona una categoria</option>
                                     @foreach ($categorias as $categoria)
-                                        <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                        <option value="{{ $categoria->id }}" {{ old('categoria_id') == $categoria->id ? 'selected' : '' }}>{{ $categoria->nombre }}</option>
                                     @endforeach
                                 </select>
                                 </div>
@@ -123,7 +123,7 @@
                                     <span class="input-group-text">
                                         <i class="bi bi-currency-dollar"></i>
                                     </span>
-                                    <input type="number" name="precio_compra" id="precio_compra" class="form-control" required>
+                                    <input type="number" name="precio_compra" id="precio_compra" class="form-control" value="{{ old('precio_compra') }}" required>
                                 </div>
                                 @error('precio_compra')
                                     <small class="text-danger">{{ $message }}</small>
@@ -138,7 +138,7 @@
                                     <span class="input-group-text">
                                         <i class="bi bi-currency-dollar"></i>
                                     </span>
-                                    <input type="number" name="precio_venta" id="precio_venta" class="form-control" required>
+                                    <input type="number" name="precio_venta" id="precio_venta" class="form-control" value="{{ old('precio_venta') }}" required>
                                 </div>
                                 @error('precio_venta')
                                     <small class="text-danger">{{ $message }}</small>
@@ -151,9 +151,9 @@
                                 <label for="stock">Stock</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
-                                        <i class="bi bi-currency-dollar"></i>
+                                        <i class="bi bi-boxes"></i>
                                     </span>
-                                    <input type="number" name="stock" id="stock" class="form-control" required  min="0">
+                                    <input type="number" name="stock" id="stock" class="form-control" value="{{ old('stock') }}" required  min="0">
                                 </div>
                                 @error('stock')
                                     <small class="text-danger">{{ $message }}</small>

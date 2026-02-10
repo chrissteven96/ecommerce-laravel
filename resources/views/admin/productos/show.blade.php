@@ -181,7 +181,7 @@
                         <hr>
                 <div class="row">
                     <div class="d-flex justify-content-end gap-2 mt-4">
-                        <a href="{{ url('/admin/productos/' . $producto->id . '/edit')  }}" class="btn btn-secondary">
+                        <a href="{{ url('/admin/producto/' . $producto->id . '/edit')  }}" class="btn btn-secondary">
                             <i class="bi bi-pencil me-2"></i>Editar
                         </a>
 

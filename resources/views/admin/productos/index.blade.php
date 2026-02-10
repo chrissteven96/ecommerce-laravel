@@ -61,9 +61,9 @@
                             <td> {{ $producto->nombre }}</td>
                             <td> {{ $producto->codigo }}</td>
                             <td> {{ $producto->descripcion_corta }}</td>
-                            <td> {{ $producto->precio_compra }}</td>
-                            <td> {{ $producto->precio_venta }}</td>
-                            <td> {{ $producto->stock }}</td>
+                            <td> {{ $ajuste->divisa." ".    $producto->precio_compra }}</td>
+                            <td> {{ $ajuste->divisa." ".$producto->precio_venta }}</td>
+                            <td style="text-align: center;"> {{ $producto->stock }}</td>
                             <td class="text-center gap-2 btn-group">
                                 
                                 
