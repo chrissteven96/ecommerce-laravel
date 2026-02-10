@@ -167,100 +167,43 @@
                     </div>
 
   
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <h6 class="m-0 font-weight-bold text-primary">Subir imagenes</h6>
-                            <div class="form-group">
-                                <label for="imagenes">Imagenes</label>
-                                <input type="file"
-                                    name="images[]"
-                                    class="form-control"
-                                    multiple
-                                    accept="image/*"
-                                    onchange="previewImages(this)"
-                                    id="imagenes">
-                            </div>
-                            <div id="imagePreview" class="row mt-2"></div>
-                            <script>
-                                function previewImages(input) {
-                                    const preview = document.getElementById('imagePreview');
-                                    preview.innerHTML = '';
-
-                                    Array.from(input.files).forEach(file => {
-                                        const reader = new FileReader();
-
-                                        reader.onload = e => {
-                                            preview.innerHTML += `
-                                                <div class="col-md-3 mb-3">
-                                                    <img src="${e.target.result}"
-                                                        class="img-fluid rounded"
-                                                        style="height:150px;object-fit:cover;">
-                                                </div>
-                                            `;
-                                        };
-
-                                        reader.readAsDataURL(file);
-                                    });
-                                }
-                                </script>
-                        </div>
-                    </div>
-
                     <div class="row mt-4 mb-4">
-                        <h6 class="">Imagenes</h6>
-                        
-                        @if ($imagenes->count() > 0)
-                        @foreach ($imagenes as $imagen)
-                            <div class="col-md-4 mb-3">
-                                <div class="card">
-                                    <form action="{{ url('admin/producto/destroy-imagen/' . $imagen->id) }}" 
-                                      method="POST" id="delete-form-{{ $imagen->id }}">
-                                      @method('DELETE')
-                                      @csrf
-                                    <img src="{{ asset('storage/' . $imagen->imagen) }}"
-                                        class="card-img-top img-fluid"
-                                        style="height:250px; width:100% ; object-fit:contain;"
-                                        alt="Imagen del producto">
-                                        <button type="button" class="btn btn-danger btn-block" title="Eliminar" onclick="confirmDelete{{ $imagen->id }}(event)" > <i class="bi bi-trash"></i> </button>
-                                    </form>
+                        <h6 class="">Subir imagenes</h6>
+                        <div class="form-group">
+                            <label for="imagenes">Imagenes</label>
+                            <input type="file"
+                                name="images[]"
+                                class="form-control"
+                                multiple
+                                accept="image/*"
+                                onchange="previewImages(this)"
+                                id="imagenes">
+                        </div>
+                        <div id="imagePreview" class="row mt-2"></div>
+                        <script>
+                            function previewImages(input) {
+                                const preview = document.getElementById('imagePreview');
+                                preview.innerHTML = '';
 
-                                    <script>
-                                        function confirmDelete{{ $imagen->id }}(event) {
-                                            event.preventDefault();
-                                            Swal.fire({
-                                                title: "¿Desea eliminar esta imagen?",
-                                               
-                                                icon: "warning",
-                                                showCancelButton: true,
-                                                reverseButtons: true,
-                                                buttonsStyling: false,
-                                                confirmButtonText: "Eliminar",
-                                                cancelButtonText: "Cancelar",
-                                                customClass: {
-                                                    actions: 'd-flex gap-2',
-                                                    confirmButton: 'btn btn-danger',
-                                                    cancelButton: 'btn btn-secondary'
-                                                }
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    document.getElementById('delete-form-{{ $imagen->id }}').submit();
-                                                    
-                                                }
-                                                });
-                                        }
-                                    </script>
+                                Array.from(input.files).forEach(file => {
+                                    const reader = new FileReader();
 
+                                    reader.onload = e => {
+                                        preview.innerHTML += `
+                                            <div class="col-md-3 mb-3">
+                                                <img src="${e.target.result}"
+                                                    class="img-fluid rounded"
+                                                    style="height:150px;object-fit:cover;">
+                                            </div>
+                                        `;
+                                    };
 
-
-                                </div>
-                            </div>
-                        @endforeach
-                      @else
-                        <p>No hay imágenes disponibles</p>
-                        @endif
+                                    reader.readAsDataURL(file);
+                                });
+                            }
+                            </script>
                     </div>
 
-                        
                         <hr>
                 <div class="row">
                     <div class="d-flex justify-content-end gap-2 mt-4">
@@ -275,6 +218,70 @@
                 </form>
             </div>
       
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de imágenes existentes fuera del formulario principal -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <h6 class="m-0 font-weight-bold text-primary">Imágenes existentes</h6>
+                    </div>
+                    <div class="card-body">
+                        @if ($imagenes->count() > 0)
+                        <div class="row">
+                        @foreach ($imagenes as $imagen)
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <img src="{{ asset('storage/' . $imagen->imagen) }}"
+                                        class="card-img-top img-fluid"
+                                        style="height:250px; width:100% ; object-fit:contain;"
+                                        alt="Imagen del producto">
+                                    <div class="card-body p-2">
+                                        <form action="{{ url('admin/producto/destroy-imagen/' . $imagen->id) }} " 
+                                          method="POST" id="delete-form-{{ $imagen->id }}">
+                                          @method('DELETE')
+                                          @csrf
+                                          <button type="button" class="btn btn-danger btn-block" onclick="confirmDelete{{ $imagen->id }}(event)">
+                                              <i class="bi bi-trash"></i> Eliminar
+                                          </button>
+                                        </form>
+                                        <script>
+                                            function confirmDelete{{ $imagen->id }}(event) {
+                                                event.preventDefault();
+                                                Swal.fire({
+                                                    title: "¿Desea eliminar esta imagen?",
+                                                    icon: "warning",
+                                                    showCancelButton: true,
+                                                    reverseButtons: true,
+                                                    buttonsStyling: false,
+                                                    confirmButtonText: "Eliminar",
+                                                    cancelButtonText: "Cancelar",
+                                                    customClass: {
+                                                        actions: 'd-flex gap-2',
+                                                        confirmButton: 'btn btn-danger',
+                                                        cancelButton: 'btn btn-secondary'
+                                                    }
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        document.getElementById('delete-form-{{ $imagen->id }}').submit();
+                                                    }
+                                                });
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        </div>
+                      @else
+                        <p>No hay imágenes disponibles</p>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>

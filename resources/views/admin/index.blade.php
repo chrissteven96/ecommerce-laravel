@@ -25,7 +25,7 @@
                                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                     <a href="{{ url('/admin/roles') }}">
                                     <div class="stats-icon purple mb-2">
-                                        <i class=""><i class="bi bi-person-vcard-fill"></i></i>
+                                        <i class=""><i class="bi bi-person-vcard-fill text-gray"></i></i>
                                     </div>
                                     </a>
                                 </div>
@@ -44,7 +44,7 @@
                                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
                                     <a href="{{ url('/admin/usuarios') }}">
                                     <div class="stats-icon blue mb-2">
-                                        <i class=""><i class="bi bi-person-bounding-box"></i></i>
+                                        <i class=""><i class="bi bi-person-bounding-box text-gray"></i></i>
                                     </div>
                                     </a>
                                 </div>
@@ -61,15 +61,15 @@
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
                                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                    <a href="{{ url('/admin/usuarios') }}">
-                                    <div class="stats-icon green mb-2">
-                                        <i class="iconly-boldAdd-User"></i>
+                                    <a href="{{ url('/admin/categorias') }}">
+                                    <div class="stats-icon purple mb-2">
+                                        <i class=""><i class="bi bi-tags-fill text-gray"></i></i>
                                     </div>
                                     </a>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Following</h6>
-                                    <h6 class="font-extrabold mb-0">{{ $total_users }}</h6>
+                                    <h6 class="text-muted font-semibold">Categorias</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $total_categorias }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -80,15 +80,15 @@
                         <div class="card-body px-4 py-4-5">
                             <div class="row">
                                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                        <a href="{{ url('/admin/usuarios') }}">
+                                        <a href="{{ url('/admin/productos') }}">
                                     <div class="stats-icon red mb-2">
-                                        <i class="iconly-boldBookmark"></i>
+                                        <i class=""><i class="bi bi-box-seam-fill text-gray"></i></i>
                                     </div>
                                     </a>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                    <h6 class="text-muted font-semibold">Saved Post</h6>
-                                    <h6 class="font-extrabold mb-0">112</h6>
+                                    <h6 class="text-muted font-semibold">Prodcutos</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $total_productos }}</h6>
                                 </div>
                             </div>
                         </div>
