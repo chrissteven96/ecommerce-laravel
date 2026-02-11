@@ -70,3 +70,7 @@ Route::delete('/admin/producto/{id}', [App\Http\Controllers\ProductoController::
 
 //para eliminar imagenes
 Route::delete('/admin/producto/destroy-imagen/{id}', [App\Http\Controllers\ProductoController::class, 'destroyImagen'])->name('admin.productos.destroy-imagen')->middleware('auth');
+
+
+//Rutas para la web
+Route::get('/', [App\Http\Controllers\WebController::class, 'index'])->name('web.index');
