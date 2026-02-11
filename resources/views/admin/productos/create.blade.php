@@ -160,9 +160,6 @@
                                 @enderror   
                             </div>
                         </div>
-
-                        <input type="hidden" name="slug" id="slug" class="form-control" value="{{ old('slug') }}" readonly required>
-
                     </div>
 
   

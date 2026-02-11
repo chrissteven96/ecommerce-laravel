@@ -94,7 +94,11 @@
             <div class="product-item">
               <div class="product-image">
                 <div class="product-badge sale-badge">25% Off</div>
-                <img src="assets/img/product/product-4.webp" alt="Product Image" class="img-fluid" loading="lazy">
+                @php
+                    $img=$producto->imagenes()->first()?->imagen;
+                    
+                @endphp
+                <img src={{ $img ? asset('storage/'.$img) : asset('default/no_photo.png') }} alt="Imagen del producto" class="img-fluid" >
                 <div class="product-actions">
                   <button class="action-btn wishlist-btn " title="Agregar a favoritos">
                     <i class="bi bi-heart"></i>
@@ -122,8 +126,8 @@
                   <span class="rating-count">(38)</span>
                 </div>
                 <div class="product-price">
-                  <span class="old-price">$240.00</span>
-                  <span class="current-price">$180.00</span>
+                  {{-- <span class="old-price">$240.00</span> --}}
+                  <span class="current-price">$ {{ $producto->precio_venta }}</span>
                 </div>
                 {{-- <div class="color-swatches">
                   <span class="swatch active" style="background-color: #1f2937;"></span>

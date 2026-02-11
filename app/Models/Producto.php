@@ -20,7 +20,6 @@ class Producto extends Model
         'precio_compra',
         'precio_venta',
         'stock',
-        'imagen',
     ];
     
     public function categoria()

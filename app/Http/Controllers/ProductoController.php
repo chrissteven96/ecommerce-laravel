@@ -9,6 +9,7 @@ use App\Models\Categoria;
 use App\Models\ImagenesProducto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductoController extends Controller
 {
@@ -46,7 +47,6 @@ public function store(Request $request)
 {
     $request->validate([
         'nombre' => 'required|string|max:255',
-        'slug' => 'required|string|max:255|unique:productos,slug',
         'codigo' => 'required|string|max:100|unique:productos,codigo',
         'descripcion_corta' => 'required|string|max:500',
         'descripcion_larga' => 'required|string',
@@ -54,7 +54,7 @@ public function store(Request $request)
         'precio_venta' => 'required|numeric|min:0',
         'stock' => 'required|numeric|min:0',
         'categoria_id' => 'required|exists:categorias,id',
-        'images' => 'required|array',
+        'images' => 'nullable|array',
         'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:3072',
     ]);
 
@@ -62,7 +62,10 @@ public function store(Request $request)
 
         $producto = new Producto();
         $producto->nombre = $request->nombre;
-        $producto->slug = $request->slug;
+
+        $slug = Str::slug($request->nombre);
+
+        $producto->slug = $slug;
         $producto->codigo = $request->codigo;
         $producto->descripcion_corta = $request->descripcion_corta;
         $producto->descripcion_larga = $request->descripcion_larga;
@@ -72,16 +75,17 @@ public function store(Request $request)
         $producto->categoria_id = $request->categoria_id;
         $producto->save();
 
-        // Guardar imágenes
-        foreach ($request->file('images') as $index => $image) {
+        // Guardar imágenes solo si se subieron
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+                $path = $image->store('productos', 'public');
 
-            $path = $image->store('productos', 'public');
-
-            ImagenesProducto::create([
-                'producto_id' => $producto->id,
-                'imagen' => $path,
-                'is_principal' => $index === 0 // primera imagen
-            ]);
+                ImagenesProducto::create([
+                    'producto_id' => $producto->id,
+                    'imagen' => $path,
+                    'is_principal' => $index === 0 // primera imagen
+                ]);
+            }
         }
     });
 
@@ -122,7 +126,6 @@ public function store(Request $request)
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:productos,slug,' . $id,
             'codigo' => 'required|string|max:100|unique:productos,codigo,' . $id,
             'descripcion_corta' => 'required|string|max:500',
             'descripcion_larga' => 'required|string',
@@ -136,7 +139,8 @@ public function store(Request $request)
 
         $producto = Producto::findOrFail($id);
         $producto->nombre = $request->nombre;
-        $producto->slug = $request->slug;
+        $slug = Str::slug($request->nombre);
+        $producto->slug = $slug;
         $producto->codigo = $request->codigo;
         $producto->descripcion_corta = $request->descripcion_corta;
         $producto->descripcion_larga = $request->descripcion_larga;
@@ -144,7 +148,7 @@ public function store(Request $request)
         $producto->precio_venta = $request->precio_venta;
         $producto->stock = $request->stock;
         $producto->categoria_id = $request->categoria_id;
-        // $producto->save();
+        
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
@@ -157,6 +161,7 @@ public function store(Request $request)
             }
         }
 
+        $producto->save();
          return redirect()
              ->route('admin.productos.index')
              ->with('mensaje', 'Producto actualizado exitosamente')
