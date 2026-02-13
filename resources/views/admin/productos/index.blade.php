@@ -116,7 +116,8 @@
 
                 @if ($productos->hasPages())
                 <div class="d-flex justify-content-between mt-4">
-                    {{ $productos->links('pagination::bootstrap-4') }}
+                    <div>{{ $productos->total() }} registros</div>
+                   <div>{{ $productos->links('pagination::bootstrap-4') }}</div>
                 </div>
                 @endif
             </div>

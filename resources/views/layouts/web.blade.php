@@ -109,7 +109,7 @@
         <div class="d-flex py-3 align-items-center justify-content-between">
 
           <!-- Logo -->
-          <a href="index.html" class="logo d-flex align-items-center">
+          <a href="{{ route('web.index') }}" class="logo d-flex align-items-center">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="assets/img/logo.webp" alt=""> -->
             <h1 class="sitename">{{ $ajuste->nombre ?? 'Tienda' }}</h1>
@@ -140,7 +140,7 @@
               </button>
               <div class="dropdown-menu">
                 <div class="dropdown-header">
-                  <h6>Welcome to <span class="sitename">FashionStore</span></h6>
+                  <h6>Welcome to <span class="sitename">{{ $ajuste->nombre ?? 'Tienda' }}</span></h6>
                   <p class="mb-0">Access account &amp; manage orders</p>
                 </div>
                 <div class="dropdown-body">

@@ -74,3 +74,15 @@ Route::delete('/admin/producto/destroy-imagen/{id}', [App\Http\Controllers\Produ
 
 //Rutas para la web
 Route::get('/', [App\Http\Controllers\WebController::class, 'index'])->name('web.index');
+Route::get('/producto/{id}', [App\Http\Controllers\WebController::class, 'detalle_producto'])->name('web.detalle_producto');
+
+//Rutas para el carrito
+Route::get('dasboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('web.dasboard');
+Route::get('/carrito', [App\Http\Controllers\DashboardController::class, 'carrito'])->name('web.carrito');
+
+Route::get('/web/login', [App\Http\Controllers\DashboardController::class, 'login'])->name('web.login');
+
+Route::post('/web/login', [App\Http\Controllers\DashboardController::class, 'autenticacion'])->name('web.autenticacion');
+
+Route::get('/web/register', [App\Http\Controllers\DashboardController::class, 'register'])->name('web.register');
+

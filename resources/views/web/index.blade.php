@@ -106,15 +106,15 @@
                   {{-- <button class="action-btn compare-btn" title="Agregar a comparar">
                     <i class="bi bi-arrow-left-right"></i>
                   </button> --}}
-                  <button class="action-btn quickview-btn" title="Ver producto">
+                  <a href = "{{ route('web.detalle_producto', $producto->id) }}" class="action-btn quickview-btn" title="Ver producto">
                     <i class="bi bi-zoom-in"></i>
-                  </button>
+                  </a>
                 </div>
                 <button class="cart-btn">Agregar al carrito</button>
               </div>
               <div class="product-info">
                 <div class="product-category">{{$producto->nombre}}</div>
-                <h4 class="product-name"><a href="product-details.html">{{ $producto->descripcion_corta }}</a></h4>
+                <h4 class="product-name">{{ $producto->descripcion_corta }}</h4>
                 <div class="product-rating">
                   <div class="stars">
                     <i class="bi bi-star-fill"></i>
@@ -140,7 +140,12 @@
           @endforeach
           <!-- End Product 2 -->
 
-
+                @if ($productos->hasPages())
+                <div class="d-flex justify-content-between mt-4">
+                    <div>{{ $productos->total() }} productos</div>
+                   <div>{{ $productos->links('pagination::bootstrap-4') }}</div>
+                </div>
+                @endif
         </div>
 
       </div>
