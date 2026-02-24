@@ -84,5 +84,7 @@ Route::get('/web/login', [App\Http\Controllers\DashboardController::class, 'logi
 
 Route::post('/web/login', [App\Http\Controllers\DashboardController::class, 'autenticacion'])->name('web.autenticacion');
 
-Route::get('/web/register', [App\Http\Controllers\DashboardController::class, 'register'])->name('web.register');
+Route::get('/web/registro', [App\Http\Controllers\DashboardController::class, 'registro'])->name('web.registro');
+
+Route::post('/web/registro', [App\Http\Controllers\DashboardController::class, 'registro_store'])->name('web.registro_store');
 
