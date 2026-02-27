@@ -79,12 +79,21 @@ Route::get('/producto/{id}', [App\Http\Controllers\WebController::class, 'detall
 //Rutas para el carrito
 Route::get('dasboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('web.dasboard');
 Route::get('/carrito', [App\Http\Controllers\DashboardController::class, 'carrito'])->name('web.carrito');
-
 Route::get('/web/login', [App\Http\Controllers\DashboardController::class, 'login'])->name('web.login');
-
 Route::post('/web/login', [App\Http\Controllers\DashboardController::class, 'autenticacion'])->name('web.autenticacion');
-
 Route::get('/web/registro', [App\Http\Controllers\DashboardController::class, 'registro'])->name('web.registro');
-
 Route::post('/web/registro', [App\Http\Controllers\DashboardController::class, 'registro_store'])->name('web.registro_store');
+
+//Ruta para buscar productos
+Route::get('/buscar', [App\Http\Controllers\WebController::class, 'buscar_producto'])->name('web.buscar_producto');
+
+
+
+Route::fallback(function () {
+    //Verifivar si la url es /admin
+    if (request()->is('admin/*')) {
+        return response()->view('errors.404-admin', [], 404);
+    }
+    return response()->view('errors.404', [], 404);
+});
 

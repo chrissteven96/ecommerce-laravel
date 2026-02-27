@@ -1,3 +1,7 @@
+
+@php
+  $ajuste = \App\Models\Ajuste::first() ?? '';
+@endphp
 <!DOCTYPE html>
 <html lang="es">
 
@@ -129,9 +133,9 @@
           </a>
 
           <!-- Search -->
-          <form class="search-form desktop-search-form">
+          <form class="search-form desktop-search-form" action="{{ url('/buscar') }}" method="GET">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Buscar producto">
+              <input type="text" class="form-control" value="{{ request('producto') }}" placeholder="Buscar producto" name="producto">
               <button class="btn" type="submit">
                 <i class="bi bi-search"></i>
               </button>

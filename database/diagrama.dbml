@@ -30,3 +30,20 @@ table imagenes_producto {
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }
+
+table usuarios {
+  id INT [pk, increment]
+  nombre VARCHAR(255)
+  email VARCHAR(255)
+  password VARCHAR(255)
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+table productos_favoritos {
+  id INT [pk, increment]
+  producto_id INT [ref: > productos.id]
+  usuario_id INT [ref: > usuarios.id]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
