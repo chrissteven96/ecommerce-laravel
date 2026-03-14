@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ajuste;
 use App\Models\ProductoFavorito;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductoFavoritoController extends Controller
 {
@@ -12,7 +14,14 @@ class ProductoFavoritoController extends Controller
      */
     public function index()
     {
-        //
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        $ajuste = Ajuste::first();
+        $favoritos = ProductoFavorito::where('usuario_id', Auth::user()->id)
+            ->with('producto.imagenes')
+            ->get();
+        return view('web.favoritos', compact('favoritos', 'ajuste'));
     }
 
     /**
@@ -28,7 +37,27 @@ class ProductoFavoritoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'producto_id' => 'required|exists:productos,id',
+        ]);
+
+        if (ProductoFavorito::where('usuario_id', Auth::user()->id)->where('producto_id', $request->input('producto_id'))->exists()) {
+            return redirect()
+                ->back()
+                ->with('mensaje', 'Producto ya está en favoritos')
+                ->with('icono', 'warning');
+        }
+
+        $productoFavorito = new ProductoFavorito();
+        $productoFavorito->usuario_id = Auth::user()->id;
+        $productoFavorito->producto_id = $request->input('producto_id');
+        $productoFavorito->save();
+        
+
+        return redirect()
+        ->back()
+        ->with('mensaje', 'Producto agregado a favoritos')
+        ->with('icono', 'success');
     }
 
     /**

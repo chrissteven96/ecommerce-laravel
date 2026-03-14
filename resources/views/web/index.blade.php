@@ -100,9 +100,13 @@
                 @endphp
                 <img src={{ $img ? asset('storage/'.$img) : asset('default/no_photo.png') }} alt="Imagen del producto" class="img-fluid" >
                 <div class="product-actions">
-                  <button class="action-btn wishlist-btn " title="Agregar a favoritos">
-                    <i class="bi bi-heart"></i>
-                  </button>
+                  <form action="{{ url('/favoritos') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                    <button type="submit" class="action-btn wishlist-btn " title="Agregar a favoritos">
+                      <i class="bi bi-heart"></i>
+                    </button>
+                  </form>
                   {{-- <button class="action-btn compare-btn" title="Agregar a comparar">
                     <i class="bi bi-arrow-left-right"></i>
                   </button> --}}

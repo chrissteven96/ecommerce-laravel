@@ -144,9 +144,13 @@
                     <i class="bi bi-lightning"></i>
                     Comprar ahora
                   </button> --}}
-                  <a href="{{ url('/dashboard') }}" class="btn icon-action" title="Add to Wishlist">
-                    <i class="bi bi-heart"></i>
-                  </a>
+                  <form action="{{ url('/favoritos') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                    <button type="submit" class="btn icon-action" title="Add to Wishlist">
+                      <i class="bi bi-heart"></i>
+                    </button>
+                  </form>
                 </div>
               </div>
 

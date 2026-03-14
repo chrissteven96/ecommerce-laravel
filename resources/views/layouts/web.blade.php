@@ -31,6 +31,7 @@
 
   <!-- Main CSS File -->
   <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- =======================================================
   * Template Name: NiceShop
@@ -161,19 +162,19 @@
                   <p class="mb-0">Accede a tu cuenta y gestiona tus pedidos</p>
                 </div>
                 <div class="dropdown-body">
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
+                  <a class="dropdown-item d-flex align-items-center" href="">
                     <i class="bi bi-person-circle me-2"></i>
                     <span>Mi Perfil</span>
                   </a>
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
+                  <a class="dropdown-item d-flex align-items-center" href="">
                     <i class="bi bi-bag-check me-2"></i>
                     <span>Mis Pedidos</span>
                   </a>
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
+                  <a class="dropdown-item d-flex align-items-center" href="{{ url('/favoritos') }}">
                     <i class="bi bi-heart me-2"></i>
-                    <span>Mi Lista de Deseos</span>
+                    <span>Favoritos</span>
                   </a>
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
+                  <a class="dropdown-item d-flex align-items-center" href="">
                     <i class="bi bi-gear me-2"></i>
                     <span>Configuración</span>
                   </a>
@@ -194,15 +195,25 @@
             </div>
 
             <!-- Wishlist -->
-            <a href="account.html" class="header-action-btn d-none d-md-block">
+            <a href="{{ url('/favoritos') }}" class="header-action-btn d-none d-md-block" title="Favoritos">
               <i class="bi bi-heart"></i>
-              <span class="badge">0</span>
+              @php
+              $favoritosCount = 0;
+              if (Auth::check()) {
+                $favoritosCount = \App\Models\ProductoFavorito::where('usuario_id', Auth::user()->id)
+                ->with('producto.imagenes')
+                ->get()
+                ->count();
+              }
+              @endphp
+              <span class="badge">{{ $favoritos->count() }}</span>
             </a>
 
             <!-- Cart -->
             <a href="cart.html" class="header-action-btn">
               <i class="bi bi-cart3"></i>
-              <span class="badge">3</span>
+
+              <span class="badge">5</span>
             </a>
 
             <!-- Mobile Navigation Toggle -->
@@ -977,6 +988,18 @@
 
   <!-- Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>
+
+  @if(session('mensaje') && session('icono'))
+    <script>
+        Swal.fire({
+        position: "center",
+        icon: "{{session('icono')}}",
+        title: "{{session('mensaje')}}",
+        showConfirmButton: false,
+        timer: 1500
+        });
+    </script>
+@endif
 
 </body>
 

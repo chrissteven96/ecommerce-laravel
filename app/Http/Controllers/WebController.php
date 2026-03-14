@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ajuste;
 use App\Models\Producto;
+use App\Models\ProductoFavorito;
+use Illuminate\Support\Facades\Auth;
 
 class WebController extends Controller
 {
     public function index()
+
     {
+
         $ajuste = Ajuste::first();
         $productos = Producto::paginate(8);
 
