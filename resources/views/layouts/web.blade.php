@@ -206,7 +206,7 @@
                 ->count();
               }
               @endphp
-              <span class="badge">{{ $favoritos->count() }}</span>
+              <span class="badge">{{ $favoritosCount }}</span>
             </a>
 
             <!-- Cart -->

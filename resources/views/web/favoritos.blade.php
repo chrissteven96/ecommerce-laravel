@@ -588,9 +588,9 @@
                 <div class="tab-pane fade" id="wishlist">
                   <div class="section-header" data-aos="fade-up">
                     <h2>Favoritos</h2>
-                    <div class="header-actions">
+                    {{-- <div class="header-actions">
                       <button type="button" class="btn-add-all">Agregar todos al carrito</button>
-                    </div>
+                    </div> --}}
                   </div>
 
                   <div class="wishlist-grid">
@@ -603,9 +603,53 @@
                     @endphp
                       <div class="wishlist-image">
                         <img src="{{ $img ? asset('storage/'.$img) : asset('default/no_photo.png') }}" alt="Producto" loading="lazy">
-                        <button class="btn-remove" type="button" aria-label="Remove from wishlist">
+
+
+                                <form class="d-inline" action="{{ url('/favorito/' . $favorito->id) }}" method="POST" id="delete-form-{{ $favorito->id }}">
+                                        @method('DELETE')
+                                        @csrf
+                                    
+                                    {{-- <button type="button" class="btn btn-danger" title="Eliminar" onclick="confirmDelete{{ $favorito->id }}(event)">
+                                        <i class="bi bi-trash "></i>
+                                    </button> --}}
+
+                                    <button class="btn-remove" type="button" title="Eliminar" onclick="confirmDelete{{ $favorito->id }}(event)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                    </form>
+                                    <script>
+                                        function confirmDelete{{ $favorito->id }}(event) {
+                                            event.preventDefault();
+                                            Swal.fire({
+                                                title: "¿Desea eliminar el producto {{ $favorito->producto->nombre }} de sus favoritos?",
+                                               
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                reverseButtons: true,
+                                                buttonsStyling: false,
+                                                confirmButtonText: "Eliminar",
+                                                cancelButtonText: "Cancelar",
+                                                customClass: {
+                                                    actions: 'd-flex gap-2',
+                                                    confirmButton: 'btn btn-danger',
+                                                    cancelButton: 'btn btn-secondary'
+                                                }
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    document.getElementById('delete-form-{{ $favorito->id }}').submit();
+                                                    
+                                                }
+                                                });
+                                        }
+                                    </script>
+                        {{-- <button class="btn-remove" type="button" aria-label="Remove from wishlist">
                           <i class="bi bi-trash"></i>
-                        </button>
+                        </button> --}}
+
+
+
+
+
                         <div class="sale-badge"> {{ $favorito->producto->stock }} disponibles </div> 
                       </div>
                       <div class="wishlist-content">
