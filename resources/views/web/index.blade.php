@@ -110,11 +110,21 @@
                   {{-- <button class="action-btn compare-btn" title="Agregar a comparar">
                     <i class="bi bi-arrow-left-right"></i>
                   </button> --}}
-                  <a href = "{{ route('web.detalle_producto', $producto->id) }}" class="action-btn quickview-btn" title="Ver producto">
+                  <a href = "{{ url('/producto', $producto->id) }}" class="action-btn quickview-btn" title="Ver producto">
                     <i class="bi bi-zoom-in"></i>
                   </a>
                 </div>
-                <button class="cart-btn">Agregar al carrito</button>
+
+                <form action="{{ url('/carrito/agregar') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                    <input type="hidden" name="cantidad" value="1">
+                    <button class="cart-btn">Agregar al carrito</button>
+                </form>
+
+
+
+
               </div>
               <div class="product-info">
                 <div class="product-category">{{$producto->nombre}}</div>

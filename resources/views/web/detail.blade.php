@@ -118,6 +118,8 @@
                 </div>
               </div> --}}
 
+              <form action="{{ url('/carrito/agregar') }}" method="POST">
+                    @csrf
               <!-- Purchase Options -->
               <div class="purchase-section">
                 <div class="quantity-control">
@@ -127,7 +129,7 @@
                       <button class="quantity-btn decrease" type="button">
                         <i class="bi bi-dash"></i>
                       </button>
-                      <input type="number" class="quantity-input" value="1" min="1" max="{{ $producto->stock }}">
+                      <input type="number" name="cantidad" class="quantity-input" value="1" min="1" max="{{ $producto->stock }}">
                       <button class="quantity-btn increase" type="button">
                         <i class="bi bi-plus"></i>
                       </button>
@@ -136,10 +138,14 @@
                 </div>
 
                 <div class="action-buttons">
-                  <a href="{{ url('/carrito') }}" class="btn primary-action">
-                    <i class="bi bi-bag-plus"></i>
-                    Agregar al carrito
-                  </a>
+                  
+                    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                  
+                    <button type="submit" class="btn primary-action">
+                      <i class="bi bi-bag-plus"></i>
+                      Agregar al carrito
+                    </button>
+                  </form>
                   {{-- <a href="{{ url('/dashboard') }}" class="btn secondary-action">
                     <i class="bi bi-lightning"></i>
                     Comprar ahora

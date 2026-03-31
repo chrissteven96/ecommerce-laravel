@@ -210,10 +210,19 @@
             </a>
 
             <!-- Cart -->
-            <a href="cart.html" class="header-action-btn">
+            <a href="{{ url('/carrito') }}" class="header-action-btn">
               <i class="bi bi-cart3"></i>
+              @php
+                $carritoCount = 0;
+                if (Auth::check()) {
+                  $carritoCount = \App\Models\Carrito::where('usuario_id', Auth::user()->id)
+                    ->with('producto.imagenes')
+                    ->get()
+                    ->count();
+                }
+              @endphp
 
-              <span class="badge">5</span>
+              <span class="badge">{{ $carritoCount }}</span>
             </a>
 
             <!-- Mobile Navigation Toggle -->

@@ -92,6 +92,14 @@ Route::get('/favoritos', [App\Http\Controllers\ProductoFavoritoController::class
 Route::post('/favoritos', [App\Http\Controllers\ProductoFavoritoController::class, 'store'])->name('web.favoritos.store');
 Route::delete('/favorito/{id}', [App\Http\Controllers\ProductoFavoritoController::class, 'destroy'])->name('web.favoritos.destroy');
 
+//Ruta para carrito
+Route::get('/carrito', [App\Http\Controllers\CarritoController::class, 'index'])->name('web.carrito.index');
+Route::post('/carrito/agregar', [App\Http\Controllers\CarritoController::class, 'store'])->name('web.carrito.store');
+Route::put('/carrito/actualizar', [App\Http\Controllers\CarritoController::class, 'update'])->name('web.carrito.update');
+
+Route::delete('/carrito/{id}', [App\Http\Controllers\CarritoController::class, 'destroy'])->name('web.carrito.destroy');
+Route::post('carrito/limpiar', [App\Http\Controllers\CarritoController::class, 'limpiar'])->name('web.carrito.limpiar');
+
 
 Route::fallback(function () {
     //Verifivar si la url es /admin

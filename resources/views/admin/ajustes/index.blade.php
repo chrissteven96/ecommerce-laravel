@@ -126,7 +126,7 @@
                                             name="divisa" 
                                             class="form-select @error('divisa') is-invalid @enderror">
                                         @foreach($monedas as $moneda)
-                                            <option value="{{ $moneda['code'] }}" {{ (old('divisa', $ajuste->divisa ?? '') == $moneda['code']) ? 'selected' : '' }}>{{ $moneda['name'] }} ({{ $moneda['code'] }})</option>
+                                            <option value="{{ $moneda['symbol'] }}" {{ (old('divisa', $ajuste->divisa ?? '') == $moneda['symbol']) ? 'selected' : '' }}>{{ $moneda['name'] }} ({{ $moneda['symbol'] }})</option>
                                         @endforeach
                                     </select>
                                     @error('divisa')

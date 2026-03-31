@@ -50,15 +50,15 @@
               <!-- Navigation Menu -->
               <nav class="menu-nav">
                 <ul class="nav flex-column" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#orders">
+                  {{-- <li class="nav-item">
+                     <a class="nav-link active" data-bs-toggle="tab" href="#orders">
                       <i class="bi bi-box-seam"></i>
                       <span>My Orders</span>
                       <span class="badge">3</span>
-                    </a>
-                  </li>
+                    </a> 
+                  </li> --}}
                   <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#wishlist">
+                    <a class="nav-link active" data-bs-toggle="tab" aria-selected="true" href="#wishlist">
                       <i class="bi bi-heart"></i>
                       <span>Favoritos</span>
                       <span class="badge">{{ $favoritos->count() }}</span>
@@ -109,7 +109,7 @@
             <div class="content-area">
               <div class="tab-content">
                 <!-- Orders Tab -->
-                <div class="tab-pane fade show active" id="orders">
+                {{-- <div class="tab-pane fade show active" id="orders">
                   <div class="section-header" data-aos="fade-up">
                     <h2>My Orders</h2>
                     <div class="header-actions">
@@ -582,10 +582,10 @@
                       <i class="bi bi-chevron-right"></i>
                     </button>
                   </div>
-                </div>
+                </div> --}}
 
                 <!-- Wishlist Tab -->
-                <div class="tab-pane fade" id="wishlist">
+                <div class="tab-pane fade show active" id="wishlist">
                   <div class="section-header" data-aos="fade-up">
                     <h2>Favoritos</h2>
                     {{-- <div class="header-actions">
@@ -653,7 +653,7 @@
                         <div class="sale-badge"> {{ $favorito->producto->stock }} disponibles </div> 
                       </div>
                       <div class="wishlist-content">
-                        <h4>{{ $favorito->producto->nombre }}</h4>
+                        <a href="{{ url('producto/' . $favorito->producto->id) }}"><h4>{{ $favorito->producto->nombre }}</h4></a>
                         <div class="product-meta">
                           <div class="rating">
                             <i class="bi bi-star-fill"></i>
@@ -668,7 +668,12 @@
                             {{-- <span class="original">$99.99</span> --}}
                           </div>
                         </div>
-                        <button type="button" class="btn-add-cart">Agregar al carrito</button>
+                        <form action="{{ url('/carrito/agregar') }}" method="POST">
+                          @csrf
+                          <input type="hidden" name="producto_id" value="{{ $favorito->producto->id }}">
+                          <input type="hidden" name="cantidad" value="1">
+                          <button type="submit" class="btn-add-cart">Agregar al carrito</button>
+                        </form>
                       </div>
                     </div>
                     @endforeach

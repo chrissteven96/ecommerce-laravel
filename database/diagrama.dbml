@@ -47,3 +47,12 @@ table productos_favoritos {
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }
+
+table carritos {
+  id INT [pk, increment]
+  producto_id INT [ref: > productos.id]
+  usuario_id INT [ref: > usuarios.id]
+  cantidad INT
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}

@@ -8,7 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
-        
+use App\Models\Carrito;
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -52,5 +53,10 @@ class User extends Authenticatable
     public function productoFavoritos()
     {
         return $this->hasMany(ProductoFavorito::class, 'usuario_id');
+    }
+    
+    public function carritos()
+    {
+        return $this->hasMany(Carrito::class, 'usuario_id');
     }
 }

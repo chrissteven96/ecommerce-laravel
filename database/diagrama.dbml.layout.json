@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "positions": {
+    "table-categoria": {
+      "x": 30,
+      "y": 886
+    },
+    "table-productos": {
+      "x": 8.5,
+      "y": 338
+    },
+    "table-imagenes_producto": {
+      "x": 0,
+      "y": 15
+    },
+    "table-usuarios": {
+      "x": 612.2231428028518,
+      "y": 428.8598434516641
+    },
+    "table-productos_favoritos": {
+      "x": 250,
+      "y": 15
+    },
+    "table-carritos": {
+      "x": 305.5809990725259,
+      "y": 321.5778113660162
+    }
+  }
+}

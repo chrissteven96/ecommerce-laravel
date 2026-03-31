@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Carrito;
 
 class Producto extends Model
 {
@@ -35,5 +36,10 @@ class Producto extends Model
     public function favoritos()
     {
         return $this->hasMany(ProductoFavorito::class, 'producto_id');
+    }
+
+    public function carritos()
+    {
+        return $this->hasMany(Carrito::class, 'producto_id');
     }
 }
