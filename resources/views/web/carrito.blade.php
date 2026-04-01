@@ -43,6 +43,7 @@
 
               @php
                 $total = 0;
+                $envio = 0; 
               @endphp
 
 
@@ -148,6 +149,7 @@
                         
                         $subtotal = $carrito->producto->precio_venta * $carrito->cantidad;
                         $total += $subtotal;
+                        
                       @endphp
                       <span>{{ $ajuste->divisa." ".$subtotal }}</span>
                     </div>
@@ -200,28 +202,39 @@
 
               <div class="summary-item shipping-item">
                 <span class="summary-label">Envío</span>
+
+
                 <div class="shipping-options">
                   <div class="form-check text-end">
-                    <input class="form-check-input" type="radio" name="shipping" id="standard" checked="">
+                    <input class="form-check-input" type="radio" name="shipping" id="standard" checked="" value="5">
                     <label class="form-check-label" for="standard">
-                      Envío Standard - $4.99
+                      Envío a provincia - $5.00
                     </label>
                   </div>
+
                   <div class="form-check text-end">
-                    <input class="form-check-input" type="radio" name="shipping" id="express">
-                    <label class="form-check-label" for="express">
-                      Express Delivery - $12.99
+                    <input class="form-check-input" type="radio" name="shipping" id="delivery" value="1.50">
+                    <label class="form-check-label" for="delivery" >
+                      Envío delivery (Dentro de la ciudad) - $1.50
                     </label>
                   </div>
+
                   <div class="form-check text-end">
-                    <input class="form-check-input" type="radio" name="shipping" id="free">
+                    <input class="form-check-input" type="radio" name="shipping" id="shop" checked="">
+                    <label class="form-check-label" for="shop">
+                      Retiro en tienda - $0.00
+                    </label>
+                  </div>
+
+                  <div class=" text-end">
+                    {{-- <input class="form-check-input" type="radio" name="shipping" id="free"> --}}
                     <label class="form-check-label" for="free">
-                      Envío Gratis (Pedidos sobre $300)
+                      Envío Gratis (Pedidos sobre $150)
                     </label>
                   </div>
                 </div>
               </div>
-
+{{-- 
               <div class="summary-item">
                 <span class="summary-label">Tax</span>
                 <span class="summary-value">$27.00</span>
@@ -230,7 +243,7 @@
               <div class="summary-item discount">
                 <span class="summary-label">Discount</span>
                 <span class="summary-value">-$0.00</span>
-              </div>
+              </div> --}}
 
               <div class="summary-total">
                 <span class="summary-label">Total</span>
