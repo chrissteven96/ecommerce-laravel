@@ -56,3 +56,26 @@ table carritos {
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }
+
+table ordens {
+  id INT [pk, increment]
+  usuario_id INT [ref: > usuarios.id]
+  total DECIMAL(10, 2)
+  divisa VARCHAR(255)
+  estado_pago VARCHAR(255)
+  estado_orden VARCHAR(255)
+  transaccion_id VARCHAR(255)
+  direccion_envio TEXT
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+table detalle_ordens {
+  id INT [pk, increment]
+  orden_id INT [ref: > ordens.id]
+  producto_id INT [ref: > productos.id]
+  cantidad INT
+  precio DECIMAL(10, 2)
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}

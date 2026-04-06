@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Carrito;
+use App\Models\Orden;
 
 class User extends Authenticatable
 {
@@ -58,5 +59,10 @@ class User extends Authenticatable
     public function carritos()
     {
         return $this->hasMany(Carrito::class, 'usuario_id');
+    }
+    
+    public function ordens()
+    {
+        return $this->hasMany(Orden::class, 'usuario_id');
     }
 }
