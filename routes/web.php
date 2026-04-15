@@ -100,6 +100,10 @@ Route::put('/carrito/actualizar', [App\Http\Controllers\CarritoController::class
 Route::delete('/carrito/{id}', [App\Http\Controllers\CarritoController::class, 'destroy'])->name('web.carrito.destroy');
 Route::post('carrito/limpiar', [App\Http\Controllers\CarritoController::class, 'limpiar'])->name('web.carrito.limpiar');
 
+//Ruta para completar compra
+Route::get('/carrito/completar', [App\Http\Controllers\CompletarController::class, 'index'])->name('web.completar.index');
+Route::post('carrito/completar', [App\Http\Controllers\CompletarController::class, 'store'])->name('web.completar.store');
+
 
 Route::fallback(function () {
     //Verifivar si la url es /admin

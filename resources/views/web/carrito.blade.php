@@ -251,7 +251,7 @@
               </div>
 
               <div class="checkout-button">
-                <a href="#" class="btn btn-accent w-100">
+                <a href="{{ url('carrito/completar') }}" class="btn btn-accent w-100">
                   Proceder al Pago <i class="bi bi-arrow-right"></i>
                 </a>
               </div>
