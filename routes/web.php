@@ -102,8 +102,8 @@ Route::post('carrito/limpiar', [App\Http\Controllers\CarritoController::class, '
 
 //Ruta para completar compra
 Route::get('/carrito/completar', [App\Http\Controllers\CompletarController::class, 'index'])->name('web.completar.index');
-Route::post('carrito/completar', [App\Http\Controllers\CompletarController::class, 'store'])->name('web.completar.store');
-
+Route::post('/carrito/completar', [App\Http\Controllers\CompletarController::class, 'store'])->name('web.completar.store');
+Route::post('/carrito/enviar-whatsapp', [App\Http\Controllers\CompletarController::class, 'enviarWhatsApp'])->name('web.completar.enviar-whatsapp');
 
 Route::fallback(function () {
     //Verifivar si la url es /admin

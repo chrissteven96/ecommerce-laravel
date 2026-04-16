@@ -62,6 +62,11 @@
                     <h3>Dirección de Envío</h3>
                   </div>
                   <div class="section-content">
+                    
+                    <div class="form-group">
+                      <label for="whatsapp">Whatsapp</label>
+                      <input type="tel" class="form-control" name="whatsapp" id="whatsapp" placeholder="0987654321" required="">
+                    </div>
                     <div class="form-group">
                       <label for="address">Dirección</label>
                       <input type="text" class="form-control" name="address" id="address" placeholder="Dirección" required="">
@@ -203,6 +208,56 @@
                         <span class="btn-text">Pagar</span>
                         {{-- <span class="btn-price"> </span> --}}
                       </button>
+                    </div>
+                    
+                    <!-- Opción de WhatsApp -->
+                    <hr class="my-3">
+                    <div class="text-center">
+                      <p class="mb-2">¿Prefieres ordenar por WhatsApp?</p>
+                      
+                      <!-- Botón de prueba directo -->
+                      <a href="https://wa.me/593994768702?text=Hola%2C+quiero+hacer+un+pedido" target="_blank" class="btn btn-info mb-2">
+                        <i class="bi bi-whatsapp me-2"></i>
+                        Probar WhatsApp Directo
+                      </a>
+                      <br>
+                      
+                      <!-- Botón de prueba con datos simples -->
+                      <form action="{{ route('web.completar.enviar-whatsapp') }}" method="POST" class="mb-2">
+                        @csrf
+                        <input type="hidden" name="whatsapp" value="0987654321">
+                        <input type="hidden" name="first_name" value="Juan">
+                        <input type="hidden" name="last_name" value="Perez">
+                        <input type="hidden" name="email" value="test@email.com">
+                        <input type="hidden" name="phone" value="0123456789">
+                        <input type="hidden" name="address" value="Dirección de prueba">
+                        <input type="hidden" name="city" value="Ciudad de prueba">
+                        <input type="hidden" name="state" value="Provincia de prueba">
+                        
+                        <button type="submit" class="btn btn-warning">
+                          <i class="bi bi-whatsapp me-2"></i>
+                            Probar con Datos de Prueba
+                        </button>
+                      </form>
+                      <br>
+                      
+                      <!-- Formulario completo -->
+                      <form action="{{ route('web.completar.enviar-whatsapp') }}" method="POST" id="whatsapp-form">
+                        @csrf
+                        <!-- Campos ocultos con datos del formulario principal -->
+                        <input type="hidden" name="first_name" id="first-name-hidden" value="">
+                        <input type="hidden" name="last_name" id="last-name-hidden" value="">
+                        <input type="hidden" name="email" id="email-hidden" value="">
+                        <input type="hidden" name="phone" id="phone-hidden" value="">
+                        <input type="hidden" name="address" id="address-hidden" value="">
+                        <input type="hidden" name="city" id="city-hidden" value="">
+                        <input type="hidden" name="state" id="state-hidden" value="">
+                        
+                        <button type="submit" class="btn btn-success">
+                          <i class="bi bi-whatsapp me-2"></i>
+                          Enviar Pedido Completo por WhatsApp
+                        </button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -349,3 +404,59 @@
   </main>
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Sincronizar campos del formulario principal con el formulario de WhatsApp
+    const campos = ['first-name', 'last-name', 'email', 'phone', 'address', 'city', 'state'];
+    
+    campos.forEach(function(campo) {
+        const inputPrincipal = document.getElementById(campo);
+        const inputHidden = document.getElementById(campo + '-hidden');
+        
+        if (inputPrincipal && inputHidden) {
+            inputPrincipal.addEventListener('input', function() {
+                inputHidden.value = this.value;
+            });
+            
+            // Valor inicial
+            inputHidden.value = inputPrincipal.value;
+        }
+    });
+    
+    // Validar que el WhatsApp esté lleno antes de enviar
+    const formWhatsApp = document.querySelector('form[action*="enviar-whatsapp"]');
+    if (formWhatsApp) {
+        formWhatsApp.addEventListener('submit', function(e) {
+            console.log('Enviando formulario WhatsApp...');
+            
+            // Sincronizar datos antes de enviar
+            const campos = ['first-name', 'last-name', 'email', 'phone', 'address', 'city', 'state'];
+            campos.forEach(function(campo) {
+                const inputPrincipal = document.getElementById(campo);
+                const inputHidden = document.getElementById(campo + '-hidden');
+                if (inputPrincipal && inputHidden) {
+                    inputHidden.value = inputPrincipal.value;
+                    console.log(campo + ': ' + inputHidden.value);
+                }
+            });
+            
+            const whatsapp = document.getElementById('whatsapp').value;
+            console.log('WhatsApp: ' + whatsapp);
+            
+            if (!whatsapp) {
+                e.preventDefault();
+                alert('Por favor, ingresa tu número de WhatsApp');
+                return false;
+            }
+            
+            // Mostrar mensaje de carga
+            const submitBtn = formWhatsApp.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="bi bi-spinner me-2"></i>Enviando...';
+            submitBtn.disabled = true;
+        });
+    }
+});
+</script>
+@endpush
