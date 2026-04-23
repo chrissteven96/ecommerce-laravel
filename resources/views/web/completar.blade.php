@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-group">
                       <label for="address">Dirección</label>
-                      <input type="text" class="form-control" name="address" id="address" placeholder="Dirección" required="">
+                      <input type="text" class="form-control" name="direccion_envio" id="direccion_envio" placeholder="Dirección" required="">
                     </div>
 
                     <input type="text" name="id" value= {{ auth('web')->user()->id }} hidden>

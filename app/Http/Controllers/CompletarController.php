@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use App\Models\Orden;
+use App\Models\DetalleOrden;
+
 
 class CompletarController extends Controller
 {
@@ -42,7 +46,49 @@ class CompletarController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json($request->all());
+        if ($usuario = Auth::user()) {
+            DB::beginTransaction();
+            try {
+
+                //guarda la orden
+                $orden = new Orden();
+                $orden->usuario_id = $usuario->id;
+                $orden->estado_pago = $request->estado_pago;
+                $orden->estado_orden = $request->estado_orden;
+                $orden->transaccion_id = $request->transaccion_id;
+                $orden->divisa = $request->divisa;
+                $orden->total = $request->total;
+                $orden->direccion_envio = $request->direccion_envio;
+                $orden->save();
+
+                //guarda los detalles de la orden
+                $carritos = Carrito::where('usuario_id', $usuario->id)->get();
+                foreach ($carritos as $item) {
+                    $detalle = new DetalleOrden();
+                    $detalle->orden_id = $orden->id;
+                    $detalle->producto_id = $item->producto_id;
+                    $detalle->cantidad = $item->cantidad;
+                    $detalle->precio = $item->producto->precio_venta;
+                    $detalle->save();
+
+                    //descontar stock
+                    $producto = $item->producto;
+                    $producto->stock -= $item->cantidad;
+                    $producto->save();
+
+                    //eliminar el producto del carrito
+                    $item->delete();
+                }
+
+                DB::commit();
+                return redirect()->route('web.carrito.index')->with('mensaje', 'Pedido procesado correctamente')->with('icono', 'success');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error('Error al procesar el pedido: ' . $e->getMessage());
+                Log::error('Error al procesar el pedido: ' . $e->getTraceAsString());
+                return redirect()->route('web.carrito.index')->with('mensaje', 'Error al procesar el pedido')->with('icono', 'error');
+            }
+        }
     }
 
     /**
