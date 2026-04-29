@@ -6,15 +6,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ajuste;
 use App\Models\User;
+use App\Models\ProductoFavorito;
+use App\Models\Orden;
+use App\Models\DetalleOrden;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         if (!Auth::check()) { 
-            return redirect('/web/login');
+            return redirect('/web/login')
+            ->with('error', 'Debes iniciar sesión para acceder a esta página')
+            ->with('icono', 'warning');
         }
-        return view('web.dashboard');
+        $ajuste = Ajuste::first();
+        $favoritos =ProductoFavorito::where('usuario_id', Auth::user()->id)
+        ->with('producto.imagenes')
+        ->get();
+        $misordenes = Orden::where('usuario_id', Auth::user()->id)->get();
+        $detalleorden = DetalleOrden::where('orden_id', $misordenes->first()->id)->get();
+
+        return view('web.dashboard', compact('ajuste', 'favoritos', 'misordenes', 'detalleorden'));
     }
     
     public function carrito()

@@ -162,7 +162,7 @@
                   <p class="mb-0">Accede a tu cuenta y gestiona tus pedidos</p>
                 </div>
                 <div class="dropdown-body">
-                  <a class="dropdown-item d-flex align-items-center" href="">
+                  <a class="dropdown-item d-flex align-items-center" href="{{ url('/dashboard') }}">
                     <i class="bi bi-person-circle me-2"></i>
                     <span>Mi Perfil</span>
                   </a>

@@ -70,7 +70,7 @@ class CompletarController extends Controller
                     $detalle->cantidad = $item->cantidad;
                     $detalle->precio = $item->producto->precio_venta;
                     $detalle->save();
-
+ 
                     //descontar stock
                     $producto = $item->producto;
                     $producto->stock -= $item->cantidad;
