@@ -81,7 +81,7 @@ class CompletarController extends Controller
                 }
 
                 DB::commit();
-                return redirect()->route('web.carrito.index')->with('mensaje', 'Pedido procesado correctamente')->with('icono', 'success');
+                return redirect()->route('web.dashboard')->with('mensaje', 'Pedido procesado correctamente')->with('icono', 'success');
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error('Error al procesar el pedido: ' . $e->getMessage());

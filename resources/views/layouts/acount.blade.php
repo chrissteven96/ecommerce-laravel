@@ -1,3 +1,7 @@
+@php
+    $misordenes = \App\Models\Orden::where('usuario_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+@endphp
+
 @extends('layouts.web')
 
 @section('content')
@@ -7,11 +11,11 @@
     <!-- Page Title -->
     <div class="page-title light-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">Account</h1>
+        <h1 class="mb-2 mb-lg-0">Mis Pedidos</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="">Inicio</a></li>
-            <li class="current">Account</li>
+            <li class="current">Mis Pedidos</li>
           </ol>
         </nav>
       </div>
@@ -51,14 +55,14 @@
               <nav class="menu-nav">
                 <ul class="nav flex-column" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#orders">
+                    <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="{{ url('/dashboard') }}">
                       <i class="bi bi-box-seam"></i>
                       <span>Mis Pedidos</span>
                       <span class="badge">{{ $misordenes->count() }}</span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#wishlist">
+                    <a class="nav-link {{ request()->is('favoritos') ? 'active' : '' }}" href="{{ url('/favoritos') }}">
                       <i class="bi bi-heart"></i>
                       <span>Favoritos</span>
                       <span class="badge"> {{ $favoritos->count() }} </span>

@@ -23,8 +23,10 @@ class DashboardController extends Controller
         $favoritos =ProductoFavorito::where('usuario_id', Auth::user()->id)
         ->with('producto.imagenes')
         ->get();
-        $misordenes = Orden::where('usuario_id', Auth::user()->id)->get();
-        $detalleorden = DetalleOrden::where('orden_id', $misordenes->first()->id)->get();
+        $misordenes = Orden::where('usuario_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        $detalleorden = DetalleOrden::whereIn('orden_id', $misordenes->pluck('id'))
+        ->with('producto.imagenes')
+        ->get();
 
         return view('web.dashboard', compact('ajuste', 'favoritos', 'misordenes', 'detalleorden'));
     }

@@ -25,15 +25,21 @@
                       </div>
                     </div>
                   </div>
-
+                @php
+                  $idcont = 0;
+                @endphp
                 @foreach($misordenes as $orden)
+
+                @php
+                  $idcont++;
+                @endphp
                   <div class="orders-grid">
                     <!-- Order Card 1 -->
                     <div class="order-card" data-aos="fade-up" data-aos-delay="100">
                       <div class="order-header">
                         <div class="order-id">
-                          <span class="label">Order ID:</span>
-                          <span class="value"> {{ $orden->id }} </span>
+                          <span class="label">Orden Nº:</span>
+                          <span class="value"> {{ $idcont }} </span>
                         </div>
                         <div class="order-date"> 
                         @php
@@ -45,9 +51,12 @@
                       </div>
                       <div class="order-content">
                         <div class="product-grid">
-                          <img src="assets/img/product/product-1.webp" alt="Product" loading="lazy">
-                          <img src="assets/img/product/product-2.webp" alt="Product" loading="lazy">
-                          <img src="assets/img/product/product-3.webp" alt="Product" loading="lazy">
+                          @foreach ($orden->detalle as $detalle)
+                            @php
+                              $img = $detalle->producto->imagenes()->first()?->imagen;
+                            @endphp
+                           <img src="{{ $img ? asset('storage/'.$img) : asset('default/no_photo.png') }}" alt="Product" loading="lazy">
+                          @endforeach
                         </div>
                         <div class="order-info">
                           <div class="info-row">
@@ -58,9 +67,14 @@
                             <span>Productos</span>
                             @php
                                 $totalItems = 0;
+                                $totalprod = 0;
+                               
                                 foreach($orden->detalle as $detalle) {
                                     $totalItems += $detalle->cantidad;
+                                    $totalprod++; 
+                                    
                                 }
+                                
                             @endphp
                             <span>{{ $totalItems }} items</span>
                           </div>
@@ -72,7 +86,7 @@
                       </div>
                       <div class="order-footer">
                         <button type="button" class="btn-track" data-bs-toggle="collapse" data-bs-target="#tracking1" aria-expanded="false">Track Order</button>
-                        <button type="button" class="btn-details" data-bs-toggle="collapse" data-bs-target="#details1" aria-expanded="false">View Details</button>
+                        <button type="button" class="btn-details" data-bs-toggle="collapse" data-bs-target="#details1" aria-expanded="false">Ver Detalles</button>
                       </div>
 
                       <!-- Order Tracking -->
@@ -137,7 +151,7 @@
                       <div class="collapse order-details" id="details1">
                         <div class="details-content">
                           <div class="detail-section">
-                            <h5>Order Information</h5>
+                            <h5>Dettalle de la Orden</h5>
                             <div class="info-grid">
                               <div class="info-item">
                                 <span class="label">Payment Method</span>
@@ -151,72 +165,54 @@
                           </div>
 
                           <div class="detail-section">
-                            <h5>Items (3)</h5>
+                          
+
+                            <h5>Productos ( {{ $totalprod }} )</h5>
                             <div class="order-items">
-                              <div class="item">
-                                <img src="assets/img/product/product-1.webp" alt="Product" loading="lazy">
-                                <div class="item-info">
-                                  <h6>Lorem ipsum dolor sit amet</h6>
-                                  <div class="item-meta">
-                                    <span class="sku">SKU: PRD-001</span>
-                                    <span class="qty">Qty: 1</span>
-                                  </div>
-                                </div>
-                                <div class="item-price">$899.99</div>
-                              </div>
+                              @foreach($orden->detalle as $detalle)
+                              @php
+                              $img = $detalle->producto->imagenes()->first()?->imagen;
+                            @endphp
+                           
 
                               <div class="item">
-                                <img src="assets/img/product/product-2.webp" alt="Product" loading="lazy">
+                              <img src="{{ $img ? asset('storage/'.$img) : asset('default/no_photo.png') }}" alt="Product" loading="lazy">
                                 <div class="item-info">
-                                  <h6>Consectetur adipiscing elit</h6>
+                                  <h6> {{ $detalle->producto->nombre }} </h6>
                                   <div class="item-meta">
-                                    <span class="sku">SKU: PRD-002</span>
-                                    <span class="qty">Qty: 2</span>
+                                    <span class="sku">CÓDIGO:  {{ $detalle->producto->codigo }} </span>
+                                    <span class="qty">Cantidad: {{ $detalle->cantidad }} </span>
                                   </div>
                                 </div>
-                                <div class="item-price">$599.95</div>
+                                <div class="item-price">${{ $detalle->precio }}</div>
                               </div>
+                              @endforeach
 
-                              <div class="item">
-                                <img src="assets/img/product/product-3.webp" alt="Product" loading="lazy">
-                                <div class="item-info">
-                                  <h6>Sed do eiusmod tempor</h6>
-                                  <div class="item-meta">
-                                    <span class="sku">SKU: PRD-003</span>
-                                    <span class="qty">Qty: 1</span>
-                                  </div>
-                                </div>
-                                <div class="item-price">$129.99</div>
-                              </div>
                             </div>
                           </div>
 
                           <div class="detail-section">
-                            <h5>Price Details</h5>
+                            <h5>Detalle del precio</h5>
                             <div class="price-breakdown">
                               <div class="price-row">
                                 <span>Subtotal</span>
-                                <span>$1,929.93</span>
+                                <span>$ {{ $orden->total }}</span>
                               </div>
                               <div class="price-row">
-                                <span>Shipping</span>
-                                <span>$15.99</span>
-                              </div>
-                              <div class="price-row">
-                                <span>Tax</span>
-                                <span>$159.98</span>
+                                <span>Envio</span>
+                                <span>$5.00</span>
                               </div>
                               <div class="price-row total">
                                 <span>Total</span>
-                                <span>$2,105.90</span>
+                                <span>${{ $orden->total + 5 }}</span>
                               </div>
                             </div>
                           </div>
 
                           <div class="detail-section">
-                            <h5>Shipping Address</h5>
+                            <h5>Dirección de Envio</h5>
                             <div class="address-info">
-                              <p>Sarah Anderson<br>123 Main Street<br>Apt 4B<br>New York, NY 10001<br>United States</p>
+                              <p> {{ $orden->direccion_envio }} </p>
                               <p class="contact">+1 (555) 123-4567</p>
                             </div>
                           </div>
