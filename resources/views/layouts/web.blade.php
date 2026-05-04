@@ -155,6 +155,7 @@
             <div class="dropdown account-dropdown">
               <button class="header-action-btn" data-bs-toggle="dropdown">
                 <i class="bi bi-person"></i> {{ auth()->user()->name ?? '' }} 
+                <i class="bi bi-arrow-down-short"></i>
               </button>
               <div class="dropdown-menu">
                 <div class="dropdown-header">
@@ -238,11 +239,10 @@
       <div class="container-fluid container-xl position-relative">
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="category.html">Category</a></li>
-            <li><a href="product-details.html">Product Details</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="{{ route('web.index') }}" class="active">Inicio</a></li>
+            <li><a href="about.html">Acerca de</a></li>
+            <li><a href="category.html">Categorías</a></li>
+            <li><a href="{{ url('/carrito') }}">Carrito</a></li>
             <li><a href="checkout.html">Checkout</a></li>
             <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>

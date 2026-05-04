@@ -20,7 +20,7 @@ class DashboardController extends Controller
             ->with('icono', 'warning');
         }
         $ajuste = Ajuste::first();
-        $favoritos =ProductoFavorito::where('usuario_id', Auth::user()->id)
+        $favoritos = ProductoFavorito::where('usuario_id', Auth::user()->id)
         ->with('producto.imagenes')
         ->get();
         $misordenes = Orden::where('usuario_id', Auth::user()->id)->orderBy('id', 'desc')->get();

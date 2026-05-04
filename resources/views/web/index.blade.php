@@ -29,29 +29,58 @@
             </div>
           </div>
         </div>
-
+        @php
+            $position = random_int(0, $productos->count() - 1);
+            $producto = $productos->get($position);
+        @endphp
         <div class="hero-visuals">
           <div class="product-showcase" data-aos="fade-left" data-aos-delay="200">
             <div class="product-card featured">
-              <img src="assets/img/product/product-2.webp" alt="Featured Product" class="img-fluid">
-              <div class="product-badge">Best Seller</div>
+              @php
+                $img=$producto->imagenes()->first()?->imagen;
+              @endphp
+                <img src={{ $img ? asset('storage/'.$img) : asset('default/no_photo.png') }} alt="Imagen del producto" class="img-fluid" >
+              <div class="product-badge">Mas vendido</div>
               <div class="product-info">
-                <h4>Premium Wireless Headphones</h4>
+                <h4>{{ $producto->nombre }}</h4>
                 <div class="price">
-                  <span class="sale-price">$299</span>
-                  <span class="original-price">$399</span>
+                  <span class="sale-price">${{ $producto->precio_venta }}</span>
+                  {{-- <span class="original-price">${{ $producto->precio_original }}</span> --}}
                 </div>
               </div>
             </div>
 
+            @php
+                $position = random_int(0, $productos->count() - 1);
+                $producto = $productos->get($position);
+            @endphp
+
             <div class="product-grid">
               <div class="product-mini" data-aos="zoom-in" data-aos-delay="400">
-                <img src="assets/img/product/product-3.webp" alt="Product" class="img-fluid">
-                <span class="mini-price">$89</span>
+                @php
+                    $img=$producto->imagenes()->first()?->imagen;
+                @endphp
+
+
+                <img src={{ $img ? asset('storage/'.$img) : asset('default/no_photo.png') }} alt="Imagen del producto" class="img-fluid" >
+                
+                <span class="mini-price">${{ $producto->precio_venta }}</span>
               </div>
+
+              
+            @php
+                $position = random_int(0, $productos->count() - 1);
+                $producto = $productos->get($position);
+            @endphp
+            
               <div class="product-mini" data-aos="zoom-in" data-aos-delay="500">
-                <img src="assets/img/product/product-5.webp" alt="Product" class="img-fluid">
-                <span class="mini-price">$149</span>
+                @php
+                    $img=$producto->imagenes()->first()?->imagen;
+                @endphp
+                
+                <img src={{ $img ? asset('storage/'.$img) : asset('default/no_photo.png') }} alt="Imagen del producto" class="img-fluid" >
+                
+                <span class="mini-price">${{ $producto->precio_venta }}</span>
               </div>
             </div>
           </div>
@@ -59,7 +88,7 @@
           <div class="floating-elements">
             <div class="floating-icon cart" data-aos="fade-up" data-aos-delay="600">
               <i class="bi bi-cart3"></i>
-              <span class="notification-dot">3</span>
+              <span class="notification-dot"> {{ $carrito->count() ?? 0 }} </span>
             </div>
             <div class="floating-icon wishlist" data-aos="fade-up" data-aos-delay="700">
               <i class="bi bi-heart"></i>
@@ -93,7 +122,7 @@
           <div class="col-lg-3 col-md-6">
             <div class="product-item">
               <div class="product-image">
-                <div class="product-badge sale-badge">25% Off</div>
+                <div class="product-badge sale-badge">Disponibles:  {{ $producto->stock }} </div>
                 @php
                     $img=$producto->imagenes()->first()?->imagen;
                     
