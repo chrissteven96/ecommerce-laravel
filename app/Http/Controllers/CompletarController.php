@@ -81,12 +81,12 @@ class CompletarController extends Controller
                 }
 
                 DB::commit();
-                return redirect()->route('web.dashboard')->with('mensaje', 'Pedido procesado correctamente')->with('icono', 'success');
+                return redirect()->route('web.dashboard')->with('mensaje', 'Pedido procesado correctamente')->with('icono', 'success')->with('btn', true)->with('timer', 0)->with('texto_extra', 'Revisa tu correo para confirmar el pago y proceder con el envío');
             } catch (\Exception $e) {
                 DB::rollBack();
                 Log::error('Error al procesar el pedido: ' . $e->getMessage());
                 Log::error('Error al procesar el pedido: ' . $e->getTraceAsString());
-                return redirect()->route('web.carrito.index')->with('mensaje', 'Error al procesar el pedido')->with('icono', 'error');
+                return redirect()->route('web.carrito.index')->with('mensaje', 'Error al procesar el pedido')->with('icono', 'error')->with('btn', true)->with('timer', 3000);
             }
         }
     }

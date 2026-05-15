@@ -998,14 +998,18 @@
   <!-- Main JS File -->
   <script src="{{ asset('assets/js/main.js') }}"></script>
 
-  @if(session('mensaje') && session('icono'))
+@if(session('mensaje') && session('icono'))
     <script>
         Swal.fire({
-        position: "center",
-        icon: "{{session('icono')}}",
-        title: "{{session('mensaje')}}",
-        showConfirmButton: false,
-        timer: 1500
+            position: "center",
+            icon: "{{ session('icono') }}",
+            title: "{{ session('mensaje') }}",
+            text: "{{ session()->has('texto_extra') ? session('texto_extra') : '' }}",
+            // Verificamos si la sesión tiene el botón, si no, por defecto false
+            showConfirmButton: {{ session('btn') ? 'true' : 'false' }},
+            // Si el timer está presente en la sesión, usa ese valor (aunque sea 0)
+            // Si no está presente, le ponemos 3000 por defecto
+            timer: {{ session()->has('timer') ? session('timer') : 3000 }}
         });
     </script>
 @endif

@@ -225,7 +225,7 @@
                   </div>
 
                   <!-- Pagination -->
-                  <div class="pagination-wrapper" data-aos="fade-up">
+                  {{-- <div class="pagination-wrapper" data-aos="fade-up">
                     <button type="button" class="btn-prev" disabled="">
                       <i class="bi bi-chevron-left"></i>
                     </button>
@@ -239,7 +239,15 @@
                     <button type="button" class="btn-next">
                       <i class="bi bi-chevron-right"></i>
                     </button>
-                  </div>
+                  </div> --}}
+
+                  
+                @if ($misordenes->hasPages())
+                <div class="d-flex justify-content-between mt-4">
+                    <div>{{ $misordenes->total() }} Ordenes</div>
+                   <div>{{ $misordenes->links('pagination::bootstrap-4') }}</div>
+                </div>
+                @endif
                 </div>
 
     </section>
