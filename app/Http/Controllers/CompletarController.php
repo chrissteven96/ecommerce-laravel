@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Models\Orden;
 use App\Models\DetalleOrden;
+use App\Mail\ConfirmacionCompra;
+use Illuminate\Support\Facades\Mail;
+
 
 
 class CompletarController extends Controller
@@ -81,6 +84,11 @@ class CompletarController extends Controller
                 }
 
                 DB::commit();
+
+                $orden->load('detalle.producto');
+
+                Mail::to($usuario->email)->send(new ConfirmacionCompra($orden));
+
                 return redirect()->route('web.dashboard')->with('mensaje', 'Pedido procesado correctamente')->with('icono', 'success')->with('btn', true)->with('timer', 0)->with('texto_extra', 'Revisa tu correo para confirmar el pago y proceder con el envío');
             } catch (\Exception $e) {
                 DB::rollBack();
